@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -270,7 +271,10 @@ public class HttpClientUtil {
      * 
      * @param httpUrl
      */
-    public static String sendHttpGet(String httpUrl) {
+    public static String sendHttpGet(String httpUrl ,Map<Object, String> parms) {
+    	if(!parms.isEmpty()){
+    		httpUrl = httpUrl + "?" +convertStringParamter(parms);
+    	}
         // 创建get请求
         HttpGet httpGet = new HttpGet(httpUrl);
         return sendHttpGet(httpGet);
@@ -337,7 +341,7 @@ public class HttpClientUtil {
      * @param maps
      *            参数
      */
-    public static String sendHttpPost(String httpUrl, Map<String, String> maps) {
+    public static String sendHttpPost(String httpUrl, Map<Object, String> maps) {
         String parem = convertStringParamter(maps);
         return sendHttpPost(httpUrl, parem);
     }
@@ -409,10 +413,10 @@ public class HttpClientUtil {
      *            需要转化的键值对集合
      * @return 字符串
      */
-    public static String convertStringParamter(Map parameterMap) {
+    public static String convertStringParamter(Map<Object,String> parameterMap) {
         StringBuffer parameterBuffer = new StringBuffer();
         if (parameterMap != null) {
-            Iterator iterator = parameterMap.keySet().iterator();
+            Iterator<Object> iterator = parameterMap.keySet().iterator();
             String key = null;
             String value = null;
             while (iterator.hasNext()) {
@@ -433,7 +437,7 @@ public class HttpClientUtil {
     
     public static void main(String[] args) throws Exception {
         
-        System.out.println(sendHttpGet("http://www.baidu.com"));
+        System.out.println(sendHttpGet("http://www.baidu.com",new HashMap<>()));
     
     }
 }
