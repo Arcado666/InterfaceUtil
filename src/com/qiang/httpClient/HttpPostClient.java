@@ -66,26 +66,27 @@ public class HttpPostClient extends HttpClientUtil{
              String key = param.getKey();
              String value = "";
              Object value1 =  param.getValue();
-             if(value1.getClass().isArray()){
-             	String[] ta = (String[])param.getValue();
-             	if(ta!=null&&ta.length>0){
-             		for(int i=0;i<ta.length;i++){
-             			if(i==0){
-             				value = "["+ta[0];
-             			}
-             			else{
-             				value = value+", "+ta[i];
-             			}
-             			
-             			if(i==(ta.length-1)){
-             				value += "]";
-             			}
-             		}
-             	}
-             }
-             else{
-             	value=value1.toString();
-             }
+        	 if(value1.getClass().isArray()){
+              	String[] ta = (String[])param.getValue();
+              	if(ta!=null&&ta.length>0){
+              		for(int i=0;i<ta.length;i++){
+              			if(i==0){
+              				value = "["+ta[0];
+              			}
+              			else{
+              				value = value+", "+ta[i];
+              			}
+              			
+              			if(i==(ta.length-1)){
+              				value += "]";
+              			}
+              		}
+              	}
+              }
+              else{
+              	value=value1.toString();
+              }
+		
              secret = secret + key + "=" + value + "&";
          }
 			if(secret.endsWith("&"))
